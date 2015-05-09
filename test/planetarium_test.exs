@@ -46,4 +46,13 @@ defmodule PlanetariumTest do
     earth2 = P.find(solar_system, :earth)
     assert earth == earth2
   end
+
+  test "it can update a planet by id" do
+    mars = P.create_planet(:mars, name: "Mars", mass: 0.64)
+    solar_system = P.create_system(:solar, name: "Solar", planets: [mars])
+
+    updated_system = P.update_planet(solar_system, :mars, mass: 0.70)
+    updated_mars = P.find(updated_system, :mars)
+    assert updated_mars.mass == 0.70
+  end
 end
