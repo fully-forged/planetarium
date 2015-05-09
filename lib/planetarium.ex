@@ -18,4 +18,10 @@ defmodule Planetarium do
   def add_planet(system = %System{planets: planets}, planet) do
     %System{system|planets: [planet | planets] |> Enum.reverse}
   end
+
+  def total_mass(system) do
+    Enum.reduce(system.planets, 0, fn(p, total) ->
+      total + p.mass
+    end) |> Float.round(2)
+  end
 end
