@@ -37,4 +37,13 @@ defmodule PlanetariumTest do
     solar_system = P.create_system(:solar, name: "Solar", planets: [earth, mars])
     assert P.total_mass(solar_system) == 6.61
   end
+
+  test "it can find a planet by id" do
+    earth = P.create_planet(:earth, name: "Earth", mass: 5.97)
+    mars = P.create_planet(:mars, name: "Mars", mass: 0.64)
+    solar_system = P.create_system(:solar, name: "Solar", planets: [earth, mars])
+
+    earth2 = P.find(solar_system, :earth)
+    assert earth == earth2
+  end
 end

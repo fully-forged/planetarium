@@ -7,6 +7,20 @@ defmodule Planetarium do
     defstruct id: nil, name: nil, planets: []
   end
 
+  defimpl Enumerable, for: System do
+    def count(system) do
+      length(system.planets)
+    end
+
+    def member?(system, planet) do
+      Enumerable.member?(system.planets, planet)
+    end
+
+    def reduce(system, acc, fun) do
+      Enumerable.reduce(system.planets, acc, fun)
+    end
+  end
+
   def create_planet(id, name: name, mass: mass) do
     %Planet{id: id, name: name, mass: mass}
   end
@@ -20,8 +34,14 @@ defmodule Planetarium do
   end
 
   def total_mass(system) do
-    Enum.reduce(system.planets, 0, fn(p, total) ->
+    Enum.reduce(system, 0, fn(p, total) ->
       total + p.mass
     end) |> Float.round(2)
+  end
+
+  def find(system, planet_id) do
+    Enum.find(system, fn(p) ->
+      p.id == planet_id
+    end)
   end
 end
