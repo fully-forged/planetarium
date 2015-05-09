@@ -22,4 +22,12 @@ defmodule PlanetariumTest do
     assert solar_system.id == :solar
     assert solar_system.planets == [earth]
   end
+
+  test "it can add planets to a system" do
+    earth = P.create_planet(:earth, name: "Earth", mass: 5.97)
+    mars = P.create_planet(:mars, name: "Mars", mass: 0.64)
+    solar_system = P.create_system(:solar, name: "Solar", planets: [earth])
+    with_mars = P.add_planet(solar_system, mars)
+    assert with_mars.planets == [earth, mars]
+  end
 end

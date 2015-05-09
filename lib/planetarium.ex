@@ -14,4 +14,8 @@ defmodule Planetarium do
   def create_system(id, opts) do
     %System{id: id, name: Dict.get(opts, :name), planets: Dict.get(opts, :planets, [])}
   end
+
+  def add_planet(system = %System{planets: planets}, planet) do
+    %System{system|planets: [planet | planets] |> Enum.reverse}
+  end
 end
