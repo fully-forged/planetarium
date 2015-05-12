@@ -44,4 +44,17 @@ defmodule Planetarium do
       p.id == planet_id
     end)
   end
+
+  def update_planet(system, planet_id, opts) do
+    new_planets = Enum.map(system, fn(planet) ->
+      if planet.id == planet_id do
+        Enum.reduce(opts, planet, fn({k,v}, updated_planet) ->
+          Map.put(updated_planet, k, v)
+        end)
+      else
+        planet
+      end
+    end)
+    %System{system|planets: new_planets}
+  end
 end
