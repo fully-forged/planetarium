@@ -4,6 +4,7 @@ defmodule Planetarium do
   end
 
   defmodule System do
+    @derive [Access]
     defstruct id: nil, name: nil, planets: []
   end
 
@@ -46,10 +47,11 @@ defmodule Planetarium do
   end
 
   def update_planet(system, planet_id, opts) do
-    new_planets = Enum.map(system, fn(planet) ->
-      do_update_planet(planet, planet_id, opts)
+    update_in(system, [:planets], fn(planets) ->
+      Enum.map(planets, fn(planet) ->
+        do_update_planet(planet, planet_id, opts)
+      end)
     end)
-    %System{system|planets: new_planets}
   end
 
   defp do_update_planet(planet = %Planet{id: planet_id}, planet_id, opts) do
