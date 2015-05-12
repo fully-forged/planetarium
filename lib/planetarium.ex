@@ -54,6 +54,14 @@ defmodule Planetarium do
     end)
   end
 
+  def remove_planet(system, planet_id) do
+    update_in(system, [:planets], fn(planets) ->
+      Enum.filter(planets, fn(p) ->
+        p.id != planet_id
+      end)
+    end)
+  end
+
   defp do_update_planet(planet = %Planet{id: id}, planet_id, params) when id == planet_id do
     Enum.reduce(params, planet, fn({k,v}, updated_planet) ->
       Map.put(updated_planet, k, v)

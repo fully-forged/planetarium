@@ -55,4 +55,12 @@ defmodule PlanetariumTest do
     updated_mars = P.find(updated_system, :mars)
     assert updated_mars.mass == 0.70
   end
+
+  test "it can delete a planet by id" do
+    mars = P.create_planet(:mars, name: "Mars", mass: 0.64)
+    solar_system = P.create_system(:solar, name: "Solar", planets: [mars])
+
+    updated_system = P.remove_planet(solar_system, :mars)
+    assert updated_system.planets == []
+  end
 end
