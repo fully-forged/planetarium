@@ -1,6 +1,5 @@
 defmodule Planetarium do
   defmodule Planet do
-    @derive [Access]
     defstruct id: nil, name: nil, mass: 0.0
   end
 
