@@ -1,11 +1,9 @@
 defmodule Planetarium do
   defmodule Planet do
-    @derive [Access]
     defstruct id: nil, name: nil, mass: 0.0
   end
 
   defmodule System do
-    @derive [Access]
     defstruct id: nil, name: nil, planets: []
   end
 
@@ -46,19 +44,4 @@ defmodule Planetarium do
       p.id == planet_id
     end)
   end
-
-  def update_planet(system, planet_id, params) do
-    update_in(system, [:planets], fn(planets) ->
-      Enum.map(planets, fn(p) ->
-        do_update_planet(p, planet_id, params)
-      end)
-    end)
-  end
-
-  defp do_update_planet(planet = %Planet{id: id}, planet_id, params) when id == planet_id do
-    Enum.reduce(params, planet, fn({k,v}, updated_planet) ->
-      Map.put(updated_planet, k, v)
-    end)
-  end
-  defp do_update_planet(planet, _planet_id, _params), do: planet
 end
